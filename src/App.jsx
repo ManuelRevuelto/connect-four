@@ -4,6 +4,7 @@ import { COLUMNS, ROWS, TURNS } from "./constants"
 import { checkEndGame, checkWinner } from "./logic/board"
 import { WinnerModal } from "./components/WinnerModal"
 import { resetGameStorage, saveGameToStorage } from "./logic/storage"
+import { FollowMouse } from "./components/FollowMouse"
 
 
 export function App() {
@@ -20,6 +21,7 @@ export function App() {
     })
 
     const [winner, setWinner] = useState(null)
+
 
     const updateBoard = (index) => {
 
@@ -74,6 +76,8 @@ export function App() {
                     })
                 }
             </section>
+
+            <FollowMouse color={turn}/>
 
             <section className='turn'>
                 <Square isRed={turn === TURNS.RED}></Square>
