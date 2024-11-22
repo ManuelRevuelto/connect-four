@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Square } from "./components/Square"
 import { COLUMNS, ROWS, TURNS } from "./constants"
 import { checkEndGame, checkWinner } from "./logic/board"
@@ -22,6 +22,18 @@ export function App() {
 
     const [winner, setWinner] = useState(null)
 
+    const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+
+    useEffect(() => {
+        const checkDevice = () => {
+            const isMobileOrTablet = window.matchMedia("(pointer: coarse)").matches;
+            setIsMobileOrTablet(isMobileOrTablet);
+        };
+
+        checkDevice();
+        window.addEventListener("resize", checkDevice);
+        return () => window.removeEventListener("resize", checkDevice);
+    }, []);
 
     const updateBoard = (index) => {
 
@@ -77,7 +89,7 @@ export function App() {
                 }
             </section>
 
-            <FollowMouse color={turn}/>
+            {!isMobileOrTablet && <FollowMouse color={turn} />}
 
             <section className='turn'>
                 <Square isRed={turn === TURNS.RED}></Square>
